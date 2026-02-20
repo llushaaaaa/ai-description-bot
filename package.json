@@ -1,0 +1,21 @@
+{
+  "name": "ai-description-bot",
+  "version": "1.0.0",
+  "description": "AI-powered PR description generator for GitHub",
+  "main": "src/description-generator.js",
+  "scripts": {
+    "generate": "node src/description-generator.js"
+  },
+  "keywords": [
+    "ai",
+    "pr-description",
+    "github",
+    "groq"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^21.0.2",
+    "groq-sdk": "^0.37.0"
+  }
+}
