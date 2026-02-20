@@ -4,36 +4,28 @@ const { Octokit } = require('@octokit/rest');
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
-const DESCRIPTION_PROMPT = `You are an expert at writing clear and concise PR descriptions.
-Analyze the provided diff and generate a well-structured PR description.
+const DESCRIPTION_PROMPT = `Ты эксперт по написанию чётких и понятных описаний PR.
+Проанализируй предоставленный diff и сгенерируй структурированное описание PR на русском языке.
 
-Your response should follow this format:
+Твой ответ должен следовать этому формату:
 
-## Summary
-Brief overview of what this PR does (1-2 sentences)
+## Краткое описание
+Краткий обзор того, что делает этот PR (1-2 предложения)
 
-## Changes
-- List of specific changes made
-- Be concise but informative
-- Group related changes together
+## Изменения
+- Список конкретных изменений
+- Будь кратким, но информативным
+- Группируй связанные изменения вместе
 
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Breaking change
-- [ ] Refactoring
-- [ ] Documentation
-- [ ] Tests
+## Дополнительные заметки
+Важный контекст, шаги миграции или на что ревьюерам стоит обратить внимание.
 
-## Additional Notes
-Any important context, migration steps, or things reviewers should pay attention to.
-
-Rules:
-- Be concise and professional
-- Focus on WHAT changed and WHY, not HOW
-- Use bullet points for clarity
-- If it's a small change, keep the description short
-- Detect the language from code comments/strings and write in that language, otherwise use English`;
+Правила:
+- Пиши кратко и профессионально
+- Фокусируйся на том, ЧТО изменилось и ЗАЧЕМ, а не КАК
+- Используй маркированные списки для ясности
+- Если изменение небольшое, описание тоже должно быть коротким
+- ВСЕГДА пиши на русском языке`;
 
 async function getChangedFiles(owner, repo, pullNumber) {
   const { data: files } = await octokit.pulls.listFiles({
