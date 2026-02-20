@@ -1,0 +1,45 @@
+<div class="user-profile">
+  @if (isLoading()) {
+    <div class="loading-spinner">
+      <span>Loading...</span>
+    </div>
+  } @else {
+    @if (user(); as currentUser) {
+      <div class="profile-card">
+        <div class="avatar">
+          @if (currentUser.avatar) {
+            <img [src]="currentUser.avatar" [alt]="currentUser.name" />
+          } @else {
+            <div class="avatar-placeholder">
+              {{ currentUser.name.charAt(0).toUpperCase() }}
+            </div>
+          }
+        </div>
+
+        <div class="profile-info">
+          <h2>{{ displayName() }}</h2>
+          <span [class]="statusClass()">
+            {{ currentUser.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+
+        @if (showActions()) {
+          <div class="actions">
+            @if (isEditing()) {
+              <button class="btn-save" (click)="saveUser()">Save</button>
+              <button class="btn-cancel" (click)="toggleEdit()">Cancel</button>
+            } @else {
+              <button class="btn-edit" (click)="toggleEdit()">Edit</button>
+              <button class="btn-delete" (click)="deleteUser()">Delete</button>
+            }
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="no-user">
+        <p>User not found</p>
+        <button (click)="loadUser()">Retry</button>
+      </div>
+    }
+  }
+</div>
